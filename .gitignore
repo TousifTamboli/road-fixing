@@ -1,0 +1,40 @@
+# Node.js dependencies
+node_modules/
+**/node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+**/.env
+
+# Build outputs
+frontend/dist/
+admin-panel/dist/
+backend/dist/
+
+# Vite cache
+frontend/node_modules/.vite/
+admin-panel/node_modules/.vite/
+
+# MacOS system files
+.DS_Store
+
+# VSCode settings folder
+.vscode/
+
+# npm package locks
+package-lock.json
+yarn.lock
+
+# Optional: local uploads folder if used
+backend/uploads/
+
+# Optional: IDE files
+.idea/
+*.iml
