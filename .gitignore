@@ -38,3 +38,6 @@ backend/uploads/
 # Optional: IDE files
 .idea/
 *.iml
+
+.env
+**/.env
