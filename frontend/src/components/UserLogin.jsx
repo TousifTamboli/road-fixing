@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-function UserLogin({ setIsLogin }) {
+function UserLogin({ setIsLogin, onLoginSuccess }) {  // <== Add onLoginSuccess here
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -16,10 +16,8 @@ function UserLogin({ setIsLogin }) {
 
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const res = await axios.post(`${BASE_URL}/api/auth/login`, {
         ...form,
@@ -27,12 +25,9 @@ function UserLogin({ setIsLogin }) {
       });
 
       alert("Login successful!");
-      console.log(res.data);
-
-      // Optional: Save token to localStorage
       localStorage.setItem("token", res.data.token);
 
-      // TODO: Redirect to dashboard or homepage
+      onLoginSuccess(res.data.user); // This now works correctly
     } catch (err) {
       alert("Login failed: " + (err.response?.data?.message || "Server error"));
       console.error(err);
