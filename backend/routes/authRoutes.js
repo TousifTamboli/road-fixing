@@ -1,24 +1,9 @@
-const express = require('express');
-const { body } = require('express-validator');
-const { register, login } = require('../controllers/authController');
+import express from "express";
+import { registerUser, loginUser } from "../controllers/authController.js";
 
 const router = express.Router();
 
-router.post('/register',
-  [
-    body('name').notEmpty(),
-    body('email').isEmail(),
-    body('password').isLength({ min: 6 })
-  ],
-  register
-);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
 
-router.post('/login',
-  [
-    body('email').isEmail(),
-    body('password').notEmpty()
-  ],
-  login
-);
-
-module.exports = router;
+export default router;

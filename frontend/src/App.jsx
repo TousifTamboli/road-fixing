@@ -1,8 +1,11 @@
+import { Routes, Route } from "react-router-dom";
+import Auth from "./pages/Auth";
+
 function App() {
   return (
-    <div className="bg-yellow-100 p-5 rounded text-center">
-      <h1 className="text-3xl font-bold text-yellow-800">Tailwind is ok</h1>
-    </div>
+    <Routes>
+      <Route path="/auth" element={<Auth />} />
+    </Routes>
   );
 }
 
