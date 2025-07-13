@@ -20,3 +20,14 @@ export const getMyComplaints = async (req, res) => {
     res.status(500).json({ message: "Error fetching complaints", error: err.message });
   }
 };
+
+
+// Get all complaints – for Admin
+export const getAllComplaints = async (req, res) => {
+  try {
+    const complaints = await Complaint.find().populate("user", "name email").sort({ createdAt: -1 });
+    res.status(200).json({ complaints });
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching all complaints", error: err.message });
+  }
+};

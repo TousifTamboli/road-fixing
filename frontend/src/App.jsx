@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import UserLogin from "./components/UserLogin";
 import UserRegister from "./components/UserRegister";
 import Dashboard from "./components/Dashboard";
+import './index.css';
+import React from "react";
+
 
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -24,7 +27,7 @@ function App() {
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem("token");
-    localStorage.removeItem("user"); // ✅ clear this too
+    localStorage.removeItem("user"); 
   };
 
   return (

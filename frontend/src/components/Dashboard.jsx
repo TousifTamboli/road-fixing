@@ -1,4 +1,6 @@
 import AddComplaint from "./AddComplaint";
+import MyComplaints from "./MyComplaints";
+import React from "react";
 
 function Dashboard({ user, onLogout, onView, view }) {
   return (
@@ -28,12 +30,12 @@ function Dashboard({ user, onLogout, onView, view }) {
 
       {/* Main content */}
       <main className="flex-1 p-8">
-        <h1 className="text-3xl font-bold mb-6">
-          Welcome, {user.name}
-        </h1>
+        <h1 className="text-3xl font-bold mb-6">Welcome, {user.name}</h1>
 
-        {view === "addComplaint" && <AddComplaint />}
-        {/* Later add view === "myComplaints" etc */}
+        {view === "addComplaint" && <AddComplaint user={user} />}
+        {view === "myComplaints" && (
+          <MyComplaints user={user} onLogout={onLogout} onView={onView} />
+        )}
       </main>
     </div>
   );
