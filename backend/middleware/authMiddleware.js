@@ -15,7 +15,7 @@ export const verifyToken = (req, res, next) => {
       return res.status(403).json({ message: "Forbidden" });
     }
 
-    console.log("Token valid. Decoded:", decoded);
+    // console.log("Token valid. Decoded:", decoded);
     req.userId = decoded.id;
     next();
   });
