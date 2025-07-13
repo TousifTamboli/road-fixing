@@ -28,7 +28,7 @@ function UserLogin({ setIsLogin, onLoginSuccess }) {  // <== Add onLoginSuccess 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      onLoginSuccess(res.data.user); // This now works correctly
+      onLoginSuccess(res.data.user); 
     } catch (err) {
       alert("Login failed: " + (err.response?.data?.message || "Server error"));
       console.error(err);

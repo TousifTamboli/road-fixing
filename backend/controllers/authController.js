@@ -23,8 +23,6 @@ export const loginUser = async (req, res) => {
   const { email, password, role } = req.body;
   try {
     const user = await Auth.findOne({ email, role });
-    console.log("Login Attempt:", email, role);
-    console.log("DB User:", user);
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
