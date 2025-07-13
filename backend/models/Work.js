@@ -9,7 +9,15 @@ const workSchema = new mongoose.Schema(
       required: true,
     },
     resolvedImages: {
-      type: [String], // cloudinary image URLs
+      type: [String],
+      required: true,
+    },
+    userName: {
+      type: String,
+      required: true,
+    },
+    userEmail: {
+      type: String,
       required: true,
     },
     dateResolved: {
@@ -19,5 +27,6 @@ const workSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
 export default mongoose.model("Work", workSchema);

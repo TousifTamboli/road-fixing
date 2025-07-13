@@ -43,7 +43,7 @@ export const markAsResolved = async (req, res) => {
   }
 
   try {
-    const complaint = await Complaint.findById(id);
+    const complaint = await Complaint.findById(id).populate("user", "name email");
     if (!complaint) return res.status(404).json({ message: "Complaint not found" });
 
     complaint.status = "Resolved";
@@ -52,6 +52,8 @@ export const markAsResolved = async (req, res) => {
     const work = await Work.create({
       complaintId: id,
       resolvedImages,
+      userName: complaint.user.name,
+      userEmail: complaint.user.email,
     });
 
     res.status(200).json({ message: "Status updated & work logged", work });
@@ -59,3 +61,4 @@ export const markAsResolved = async (req, res) => {
     res.status(500).json({ message: "Server error", error: err.message });
   }
 };
+

@@ -12,7 +12,8 @@ function AdminDashboard({ onLogout }) {
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/complaints/all`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setComplaints(res.data.complaints);
+        const pendingComplaints = res.data.complaints.filter(c => c.status !== "Resolved");
+        setComplaints(pendingComplaints);
       } catch (err) {
         console.error("Error fetching complaints", err);
       }
