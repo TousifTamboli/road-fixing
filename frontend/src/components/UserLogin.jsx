@@ -6,8 +6,7 @@ function UserLogin({ setIsLogin, onLoginSuccess }) {
     password: "",
   });
 
-  // Track role: "user" or "admin"
-  const [role, setRole] = useState("user");
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -16,15 +15,13 @@ function UserLogin({ setIsLogin, onLoginSuccess }) {
     }));
   };
 
-  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const res = await fetch(`${BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, role }),
+        body: JSON.stringify({ ...form, role: "user" }),
       });
 
       const data = await res.json();
@@ -33,7 +30,6 @@ function UserLogin({ setIsLogin, onLoginSuccess }) {
       alert("Login successful!");
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
-
       onLoginSuccess(data.user);
     } catch (err) {
       alert("Login failed: " + err.message);
@@ -42,49 +38,52 @@ function UserLogin({ setIsLogin, onLoginSuccess }) {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded shadow">
-      {/* Role toggle */}
-      
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300">
+      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-semibold text-center text-blue-700 mb-6">
+          User Login
+        </h2>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            value={form.email}
+            onChange={handleChange}
+            required
+          />
 
-      <form onSubmit={handleLogin}>
-        <h2 className="text-xl font-bold mb-4 text-center">{role === "user" ? "User" : "Admin"} Login</h2>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          className="input-field mb-3 w-full px-3 py-2 border rounded"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          className="input-field mb-3 w-full px-3 py-2 border rounded"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition duration-200"
+          >
+            Login
+          </button>
+        </form>
 
-        <button
-          type="submit"
-          className="w-full mt-3 bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-        >
-          Login
-        </button>
-      </form>
-
-      <p className="mt-4 text-center text-sm">
-        Don't have an account?{" "}
-        <span
-          className="text-blue-600 cursor-pointer hover:underline"
-          onClick={() => setIsLogin(false)}
-        >
-          Register
-        </span>
-      </p>
+        <div className="text-center mt-4 text-sm">
+          <p>
+            Don&apos;t have an account?{" "}
+            <span
+              onClick={() => setIsLogin(false)}
+              className="text-blue-600 hover:underline cursor-pointer"
+            >
+              Register
+            </span>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
