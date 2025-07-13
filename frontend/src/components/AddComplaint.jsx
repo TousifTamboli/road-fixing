@@ -78,11 +78,17 @@ function AddComplaint({ user }) {
       images: imageUrls,
     };
 
+    const token = localStorage.getItem("token");
+
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/complaints/create`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(payload),
     });
+
 
     const result = await res.json();
     if (res.ok) {
@@ -95,7 +101,6 @@ function AddComplaint({ user }) {
     console.error(err);
   }
 };
-
 
 
   return (
