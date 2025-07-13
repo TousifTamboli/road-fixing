@@ -26,6 +26,7 @@ function UserLogin({ setIsLogin, onLoginSuccess }) {  // <== Add onLoginSuccess 
 
       alert("Login successful!");
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
       onLoginSuccess(res.data.user); // This now works correctly
     } catch (err) {

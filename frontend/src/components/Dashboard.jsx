@@ -1,8 +1,6 @@
-import React from "react";
+import AddComplaint from "./AddComplaint";
 
-function Dashboard({ user, onLogout, onView }) {
-  // onView can be a state setter to switch views inside dashboard
-
+function Dashboard({ user, onLogout, onView, view }) {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar */}
@@ -34,7 +32,8 @@ function Dashboard({ user, onLogout, onView }) {
           Welcome, {user.name}
         </h1>
 
-        {/* TODO: Render different views based on onView state */}
+        {view === "addComplaint" && <AddComplaint />}
+        {/* Later add view === "myComplaints" etc */}
       </main>
     </div>
   );
