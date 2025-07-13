@@ -9,10 +9,15 @@ function AdminDashboard({ onLogout }) {
     const fetchComplaints = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/complaints/all`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const pendingComplaints = res.data.complaints.filter(c => c.status !== "Resolved");
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_URL}/api/complaints/all`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        const pendingComplaints = res.data.complaints.filter(
+          (c) => c.status !== "Resolved"
+        );
         setComplaints(pendingComplaints);
       } catch (err) {
         console.error("Error fetching complaints", err);
@@ -21,31 +26,54 @@ function AdminDashboard({ onLogout }) {
     fetchComplaints();
   }, []);
 
-  // ✅ Move this inside the component
   const handleLogout = () => {
     localStorage.removeItem("admin");
     localStorage.removeItem("adminToken");
     localStorage.removeItem("token");
-    onLogout(); // properly called here
+    onLogout();
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+    <div className="min-h-screen bg-gradient-to-tr from-blue-900 via-indigo-900 to-purple-900 p-8">
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="text-4xl font-extrabold text-white drop-shadow-lg">
+          Admin Dashboard
+        </h1>
         <button
           onClick={handleLogout}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+          className="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300"
         >
           Logout
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {complaints.map((complaint) => (
-          <ComplaintCard key={complaint._id} complaint={complaint} />
-        ))}
-      </div>
+      {complaints.length === 0 ? (
+        <p className="text-center text-white text-xl mt-20">
+          🎉 No pending complaints. All caught up!
+        </p>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {complaints.map((complaint) => (
+            <div
+              key={complaint._id}
+              className="
+                bg-white/10
+                backdrop-blur-md
+                border border-white/30
+                rounded-3xl
+                p-6
+                shadow-xl
+                hover:scale-[1.03]
+                transition-transform
+                duration-300
+                cursor-pointer
+              "
+            >
+              <ComplaintCard complaint={complaint} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

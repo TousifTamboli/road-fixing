@@ -1,4 +1,3 @@
-// src/components/ComplaintCard.jsx
 import React, { useState } from "react";
 
 function ComplaintCard({ complaint, onResolved }) {
@@ -49,22 +48,37 @@ function ComplaintCard({ complaint, onResolved }) {
     setLoading(false);
     if (updateRes.ok) {
       alert("Complaint resolved!");
-      onResolved(); // refresh the list
+      onResolved();
     } else {
       alert("Error: " + result.message);
     }
   };
 
   return (
-    <div className="bg-white shadow-md p-4 rounded mb-4">
-      <h3 className="text-xl font-semibold mb-2">{complaint.type}</h3>
-      <p><strong>Name:</strong> {complaint.name}</p>
-      <p><strong>Email:</strong> {complaint.email}</p>
-      <p><strong>Status:</strong> {complaint.status}</p>
-      <p><strong>Date:</strong> {new Date(complaint.createdAt).toLocaleDateString()}</p>
-      <div className="my-2 flex gap-2 overflow-x-auto">
+    <div className="bg-white bg-opacity-80 backdrop-blur-md rounded-xl shadow-lg p-6 mb-6 transition-shadow hover:shadow-2xl">
+      <h3 className="text-2xl font-semibold mb-3 text-gray-800 border-b pb-2">{complaint.type}</h3>
+
+      <div className="space-y-1 text-gray-700 mb-4">
+        <p><span className="font-medium text-gray-900">Name:</span> {complaint.name}</p>
+        <p><span className="font-medium text-gray-900">Email:</span> {complaint.email}</p>
+        <p><span className="font-medium text-gray-900">Status:</span> 
+          <span className={`ml-2 px-2 py-0.5 rounded-full text-sm font-semibold
+            ${complaint.status === "Pending" ? "bg-yellow-200 text-yellow-800" : "bg-green-200 text-green-800"}`}>
+            {complaint.status}
+          </span>
+        </p>
+        <p><span className="font-medium text-gray-900">Date:</span> {new Date(complaint.createdAt).toLocaleDateString()}</p>
+      </div>
+
+      <div className="flex gap-3 overflow-x-auto mb-5">
         {complaint.images.map((img, i) => (
-          <img key={i} src={img} alt="complaint" className="h-24 rounded" />
+          <img
+            key={i}
+            src={img}
+            alt="complaint"
+            className="h-28 rounded-lg object-cover border border-gray-300 shadow-sm hover:scale-105 transition-transform"
+            loading="lazy"
+          />
         ))}
       </div>
 
@@ -75,12 +89,20 @@ function ComplaintCard({ complaint, onResolved }) {
             multiple
             accept="image/*"
             onChange={handleFileChange}
-            className="block my-2"
+            className="block w-full text-sm text-gray-500
+              file:mr-4 file:py-2 file:px-4
+              file:rounded-full file:border-0
+              file:text-sm file:font-semibold
+              file:bg-blue-50 file:text-blue-700
+              hover:file:bg-blue-100
+              cursor-pointer
+              mb-4"
           />
           <button
             onClick={handleResolve}
-            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
             disabled={loading}
+            className={`w-full py-2 rounded-lg font-semibold text-white transition
+              ${loading ? "bg-green-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"}`}
           >
             {loading ? "Resolving..." : "Mark as Resolved"}
           </button>

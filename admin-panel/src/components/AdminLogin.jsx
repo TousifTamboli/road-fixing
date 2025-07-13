@@ -23,39 +23,78 @@ function AdminLogin({ onLoginSuccess }) {
       );
 
       localStorage.setItem("token", res.data.token);
-          localStorage.setItem("admin", JSON.stringify(res.data.user));  // <-- This line
+      localStorage.setItem("admin", JSON.stringify(res.data.user));
 
       alert("Login successful");
-      onLoginSuccess(); // ✅ Trigger dashboard view
+      onLoginSuccess();
     } catch (err) {
       alert("Login failed: " + (err.response?.data?.message || "Server error"));
     }
   };
 
   return (
-    <form onSubmit={handleLogin} className="max-w-sm mx-auto mt-20 p-6 shadow-lg bg-white rounded">
-      <h2 className="text-2xl font-bold mb-4">Admin Login</h2>
+    <form
+      onSubmit={handleLogin}
+      className="
+        max-w-md mx-auto mt-24 p-8 
+        bg-white bg-opacity-90 
+        rounded-2xl 
+        shadow-md
+        ring-1 ring-gray-300
+        backdrop-blur-sm
+      "
+    >
+      <h2 className="text-3xl font-semibold mb-6 text-gray-800 text-center">
+        Admin Login
+      </h2>
+
       <input
         type="email"
         name="email"
         value={form.email}
         onChange={handleChange}
         placeholder="Admin Email"
-        className="input-field mb-3"
+        className="
+          w-full mb-5 px-4 py-3
+          border border-gray-300 
+          rounded-lg 
+          focus:outline-none 
+          focus:ring-2 focus:ring-blue-400
+          transition
+        "
         required
       />
+
       <input
         type="password"
         name="password"
         value={form.password}
         onChange={handleChange}
         placeholder="Password"
-        className="input-field mb-4"
+        className="
+          w-full mb-6 px-4 py-3
+          border border-gray-300 
+          rounded-lg
+          focus:outline-none 
+          focus:ring-2 focus:ring-blue-400
+          transition
+        "
         required
       />
+
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        className="
+          w-full py-3 
+          bg-blue-600 
+          hover:bg-blue-700 
+          text-white 
+          font-medium 
+          rounded-lg 
+          shadow-md
+          transition
+          duration-300
+        "
       >
         Login
       </button>
