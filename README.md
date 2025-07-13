@@ -83,13 +83,3 @@ A web application designed to empower citizens to report city infrastructure iss
    ```bash
    npm run dev
 
-
-#### Folder Structure
-root
-│
-├── backend/          # Express API and server code
-├── frontend/         # React frontend with TailwindCSS
-├── admin-panel/      # Admin dashboard (React/Vite)
-├── README.md
-├── .gitignore
-└── package.json
