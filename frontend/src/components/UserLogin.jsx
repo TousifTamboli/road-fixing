@@ -44,30 +44,7 @@ function UserLogin({ setIsLogin, onLoginSuccess }) {
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded shadow">
       {/* Role toggle */}
-      <div className="flex justify-center mb-6 space-x-4">
-        <button
-          type="button"
-          className={`py-2 px-6 rounded ${
-            role === "user"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-          onClick={() => setRole("user")}
-        >
-          User
-        </button>
-        <button
-          type="button"
-          className={`py-2 px-6 rounded ${
-            role === "admin"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-          onClick={() => setRole("admin")}
-        >
-          Admin
-        </button>
-      </div>
+      
 
       <form onSubmit={handleLogin}>
         <h2 className="text-xl font-bold mb-4 text-center">{role === "user" ? "User" : "Admin"} Login</h2>

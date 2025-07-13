@@ -1,4 +1,5 @@
 import Complaint from "../models/Complaint.js";
+import Work from "../models/Work.js";
 
 export const createComplaint = async (req, res) => {
   try {
@@ -29,5 +30,32 @@ export const getAllComplaints = async (req, res) => {
     res.status(200).json({ complaints });
   } catch (err) {
     res.status(500).json({ message: "Error fetching all complaints", error: err.message });
+  }
+};
+
+
+export const markAsResolved = async (req, res) => {
+  const { id } = req.params;
+  const { resolvedImages } = req.body;
+
+  if (!resolvedImages || resolvedImages.length !== 5) {
+    return res.status(400).json({ message: "Exactly 5 images required." });
+  }
+
+  try {
+    const complaint = await Complaint.findById(id);
+    if (!complaint) return res.status(404).json({ message: "Complaint not found" });
+
+    complaint.status = "Resolved";
+    await complaint.save();
+
+    const work = await Work.create({
+      complaintId: id,
+      resolvedImages,
+    });
+
+    res.status(200).json({ message: "Status updated & work logged", work });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
