@@ -13,7 +13,7 @@ const allowedOrigins = [
   "http://localhost:5173",                     // Local frontend
   "http://localhost:5174",                     // Local frontend
   "https://road-fixing-frontend.vercel.app",   // Deployed frontend
-  "https://road-fixing-admin.vercel.app/"              // Add your actual admin panel URL here
+  "https://road-fixing-admin.vercel.app"              // Add your actual admin panel URL here
 ];
 
 const corsOptions = {
@@ -37,8 +37,8 @@ app.get("/", (req, res) => {
   res.send("API is working ✅");
 });
 
-app.use("/api/auth", authRoutes);
-app.use("/api/complaints", complaintRoutes);
+app.use("api/auth", authRoutes);
+app.use("api/complaints", complaintRoutes);
 
 // === MongoDB Connection ===
 mongoose
