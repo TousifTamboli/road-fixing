@@ -8,6 +8,7 @@ import complaintRoutes from "./routes/complaintRoutes.js";
 dotenv.config();
 const app = express();
 
+app.options("*")
 // Middleware
 app.use(cors());
 app.use(express.json());
