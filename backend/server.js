@@ -8,30 +8,47 @@ import complaintRoutes from "./routes/complaintRoutes.js";
 dotenv.config();
 const app = express();
 
-// app.options("*", cors())
-// Middleware
+// === CORS Configuration ===
+const allowedOrigins = [
+  "http://localhost:5173",                     // Local frontend
+  "http://localhost:5174",                     // Local frontend
+  "https://road-fixing-frontend.vercel.app",   // Deployed frontend
+  "https://road-fixing-admin.vercel.app/"              // Add your actual admin panel URL here
+];
+
 const corsOptions = {
-    "origin" : "*",
-    "methods" : ["GET", "POST", "DELETE", "OPTIONS", "PUT"],
-    "allowedHeaders" : ["content-type", "authorizations"],
-}
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed for this origin: " + origin));
+    }
+  },
+  credentials: true,
+};
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Default route to check API status
+// === Routes ===
 app.get("/", (req, res) => {
-  res.send("API is working");
+  res.send("API is working ✅");
 });
 
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/complaints", complaintRoutes);
 
-// Connect to MongoDB and start server
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => app.listen(5000, () => console.log(" Server running on port 5000")))
-.catch(err => console.error(" Mongo error:", err));
+// === MongoDB Connection ===
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() =>
+    app.listen(process.env.PORT || 5000, () =>
+      console.log(`✅ Server running on port ${process.env.PORT || 5000}`)
+    )
+  )
+  .catch((err) => console.error("❌ Mongo error:", err));
