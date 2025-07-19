@@ -5,13 +5,13 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import complaintRoutes from "./routes/complaintRoutes.js";
 
+dotenv.config();
+const app = express();
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-dotenv.config();
-const app = express();
 
 // Default route to check API status
 app.get("/", (req, res) => {
